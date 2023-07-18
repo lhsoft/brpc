@@ -19,7 +19,8 @@
 // ANNOTATE_LEAKING_OBJECT_PTR(X): the heap object referenced by pointer X will
 // be annotated as a leak.
 
-#if defined(LEAK_SANITIZER) && !defined(OS_NACL)
+// LeakSanitizer is integrated into AddressSanitizer
+#if (defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER)) && !defined(OS_NACL)
 
 // Public LSan API from <sanitizer/lsan_interface.h>.
 extern "C" {

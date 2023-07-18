@@ -27,6 +27,7 @@
 #include "butil/macros.h"                            // ARRAY_SIZE
 #include "butil/fd_guard.h"                          // fd_guard
 #include "butil/logging.h"                           // CHECK
+#include "butil/debug/leak_annotations.h"
 #include "butil/time.h"
 #include "butil/class_name.h"
 #include "butil/string_printf.h"
@@ -845,6 +846,9 @@ int Server::StartInternal(const butil::EndPoint& endpoint,
         _keytable_pool = NULL;
         return -1;
     }
+
+    // Ignore memory leak check
+    ANNOTATE_LEAKING_OBJECT_PTR(_keytable_pool);
 
     if (_options.thread_local_data_factory) {
         _tl_options.thread_local_data_factory = _options.thread_local_data_factory;
